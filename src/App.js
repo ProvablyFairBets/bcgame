@@ -7,6 +7,8 @@ import { handleLimbo } from './Games/limbo.js';
 import { handleHilo } from './Games/hilo.js';
 import { handleVideoPoker } from './Games/videopoker.js';
 import { handleBlackjack } from './Games/blackjack.js';
+import { handleRoulette } from './Games/roulette.js';
+
 import './App.css';
 
 class App extends React.Component {
@@ -26,16 +28,17 @@ class App extends React.Component {
       hilo: false,
       videoPoker: false,
       blackjack: false,
+      roulette: false,
       round: 0
     }
   }
 
   handleSubmit = (event) => {
 
-    const { ServerSeed, ClientSeed, Nonce, classicDice, hashDice, plinko, limbo, hilo, videoPoker, blackjack, round } = this.state;
+    const { ServerSeed, ClientSeed, Nonce, classicDice, hashDice, plinko, limbo, hilo, videoPoker, blackjack, roulette, round } = this.state;
 
     const form = event.currentTarget;
-    if (form.checkValidity() === false || ServerSeed === '' || (!blackjack && ClientSeed === '')) {
+    if (form.checkValidity() === false || ServerSeed === '' || (!blackjack && !roulette && ClientSeed === '')) {
       event.preventDefault();
       event.stopPropagation();
       this.setState({ validated: true })
@@ -49,14 +52,15 @@ class App extends React.Component {
                 : hilo ? handleHilo(ServerSeed, ClientSeed, Nonce, round)
                   : videoPoker ? handleVideoPoker(`${ServerSeed}${ClientSeed}${Nonce}`)
                     : blackjack ? handleBlackjack(ServerSeed)
-                      : 0,
+                      : roulette ? handleRoulette(ServerSeed)
+                        : 0,
         showResult: true,
         validated: true
       })
   }
 
   render() {
-    const { ServerSeed, ClientSeed, Nonce, result, showResult, classicDice, hashDice, plinko, limbo, hilo, videoPoker, blackjack, validated } = this.state;
+    const { ServerSeed, ClientSeed, Nonce, result, showResult, classicDice, hashDice, plinko, limbo, hilo, videoPoker, blackjack, roulette, validated } = this.state;
     return (
       <div className="container pt-5">
         <div>
@@ -79,7 +83,7 @@ class App extends React.Component {
                 <Button variant={classicDice ? 'primary' : 'light'} onClick={() => {
                   this.setState({
                     classicDice: true, hashDice: false, plinko: false, limbo: false, hilo: false, videoPoker: false, blackjack: false,
-                    showResult: false, ServerSeed: '', ClientSeed: '', Nonce: 0, validated: false
+                    roulette: false, showResult: false, ServerSeed: '', ClientSeed: '', Nonce: 0, validated: false
                   })
                 }} >
                   Classic Dice
@@ -87,7 +91,7 @@ class App extends React.Component {
                 <Button variant={hashDice ? 'primary' : 'light'} className="ml-2" onClick={() => {
                   this.setState({
                     hashDice: true, classicDice: false, plinko: false, limbo: false, hilo: false, videoPoker: false, blackjack: false,
-                    showResult: false, ServerSeed: '', ClientSeed: '', Nonce: 0, validated: false
+                    roulette: false, showResult: false, ServerSeed: '', ClientSeed: '', Nonce: 0, validated: false
                   })
                 }} >
                   Hash Dice
@@ -95,7 +99,7 @@ class App extends React.Component {
                 <Button variant={plinko ? 'primary' : 'light'} className="ml-2" onClick={() => {
                   this.setState({
                     hashDice: false, classicDice: false, plinko: true, limbo: false, hilo: false, videoPoker: false, blackjack: false,
-                    showResult: false, ServerSeed: '', ClientSeed: '', Nonce: 0, validated: false
+                    roulette: false, showResult: false, ServerSeed: '', ClientSeed: '', Nonce: 0, validated: false
                   })
                 }} >
                   Plinko
@@ -103,7 +107,7 @@ class App extends React.Component {
                 <Button variant={limbo ? 'primary' : 'light'} className="ml-2" onClick={() => {
                   this.setState({
                     hashDice: false, classicDice: false, plinko: false, limbo: true, hilo: false, videoPoker: false, blackjack: false,
-                    showResult: false, ServerSeed: '', ClientSeed: '', Nonce: 0, validated: false
+                    roulette: false, showResult: false, ServerSeed: '', ClientSeed: '', Nonce: 0, validated: false
                   })
                 }} >
                   Limbo
@@ -111,7 +115,7 @@ class App extends React.Component {
                 <Button variant={hilo ? 'primary' : 'light'} className="ml-2" onClick={() => {
                   this.setState({
                     hashDice: false, classicDice: false, plinko: false, limbo: false, hilo: true, videoPoker: false, blackjack: false,
-                    result: 0, showResult: false, ServerSeed: '', ClientSeed: '', Nonce: 0, validated: false
+                    roulette: false, result: 0, showResult: false, ServerSeed: '', ClientSeed: '', Nonce: 0, validated: false
                   })
                 }} >
                   Hilo
@@ -119,7 +123,7 @@ class App extends React.Component {
                 <Button variant={videoPoker ? 'primary' : 'light'} className="ml-2" onClick={() => {
                   this.setState({
                     hashDice: false, classicDice: false, plinko: false, limbo: false, hilo: false, videoPoker: true, blackjack: false,
-                    result: 0, showResult: false, ServerSeed: '', ClientSeed: '', Nonce: 0, validated: false
+                    roulette: false, result: 0, showResult: false, ServerSeed: '', ClientSeed: '', Nonce: 0, validated: false
                   })
                 }} >
                   Video Poker
@@ -127,24 +131,32 @@ class App extends React.Component {
                 <Button variant={blackjack ? 'primary' : 'light'} className="ml-2" onClick={() => {
                   this.setState({
                     hashDice: false, classicDice: false, plinko: false, limbo: false, hilo: false, videoPoker: false, blackjack: true,
-                    result: 0, showResult: false, ServerSeed: '', ClientSeed: '', Nonce: 0, validated: false
+                    roulette: false, result: 0, showResult: false, ServerSeed: '', ClientSeed: '', Nonce: 0, validated: false
                   })
                 }} >
                   Blackjack
             </Button>
+                <Button variant={roulette ? 'primary' : 'light'} className="ml-2" onClick={() => {
+                  this.setState({
+                    hashDice: false, classicDice: false, plinko: false, limbo: false, hilo: false, videoPoker: false, blackjack: false,
+                    roulette: true, result: 0, showResult: false, ServerSeed: '', ClientSeed: '', Nonce: 0, validated: false
+                  })
+                }} >
+                  Roulette
+            </Button>
               </Row>
               <Form className="mt-5" noValidate validated={validated} >
                 <Form.Group controlId="formBasicServerSeed">
-                  <Form.Label>{!blackjack ? 'Server Seed' : 'Signature'}</Form.Label>
-                  <Form.Control type="text" required placeholder={!blackjack ? 'Enter Server Seed' : 'Enter Signature'} value={ServerSeed} onChange={(e) => {
+                  <Form.Label>{blackjack ? 'Signature' : roulette ? 'Hash' : 'Server Seed'}</Form.Label>
+                  <Form.Control type="text" required placeholder={blackjack ? 'Enter Signature' : roulette ? 'Enter Hash' : 'Enter Server Seed'} value={ServerSeed} onChange={(e) => {
                     this.setState({ ServerSeed: e.target.value })
                   }} />
                   <Form.Control.Feedback type="invalid">
-                    Please provide a valid {!blackjack ? 'Server Seed' : 'Signature'}.
+                    Please provide a valid {blackjack ? 'Signature' : roulette ? 'Hash' : 'Server Seed'}.
           </Form.Control.Feedback>
                 </Form.Group>
 
-                {!blackjack && < Form.Group controlId="formBasicClientSeed">
+                {!blackjack && !roulette && < Form.Group controlId="formBasicClientSeed">
                   <Form.Label>Client Seed</Form.Label>
                   <Form.Control type="text" required placeholder="Enter Client Seed" value={ClientSeed} onChange={(e) => {
                     this.setState({ ClientSeed: e.target.value })
@@ -154,7 +166,7 @@ class App extends React.Component {
           </Form.Control.Feedback>
                 </Form.Group>}
 
-                {!blackjack && <Form.Group controlId="formBasicNonce">
+                {!blackjack && !roulette && <Form.Group controlId="formBasicNonce">
                   <Form.Label>Nonce</Form.Label>
                   <Form.Control type="number" required placeholder="Nonce" value={Nonce} onChange={(e) => {
                     this.setState({ Nonce: e.target.value })
@@ -169,15 +181,6 @@ class App extends React.Component {
                 }
               </Form>
             </Col>
-            {/* <Col><div style={{ margin: '8%' }}>
-
-            </div>
-              {result && (hilo || videoPoker) ? <h5>Player Cards</h5> : ''}
-              {result && (hilo || videoPoker) ? result.map((card, i) => {
-                return <img width="15%" key={i} src={require('./cards-png/' + card + '.png')} alt={result} />;
-              })
-                : ''}
-            </Col> */}
           </Row>
           <br></br>
           <br></br>
@@ -188,8 +191,8 @@ class App extends React.Component {
           <br></br>
           <Row>
             {result && (hilo || videoPoker || blackjack) ? result.map((card, i) => {
-              return <div className="mt-2">
-                <div className="ml-3">{i}</div>
+              return <div className="mt-2" key={'outer_card_' + i}>
+                <div className="ml-3" key={'card_' + i}>{i}</div>
                 <img width="25%" key={i} src={require('./cards-png/' + card + '.png')} alt={result} />
               </div>
             })

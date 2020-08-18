@@ -2,7 +2,7 @@
 const crypto = require('crypto');
 
 export const handleLimbo = function (data) {
-    // create HMAC using server hash as key and client hash as message
+    // create Hash using server hash as key and client hash as message
     let hash = crypto.createHash('sha256').update(data).digest('hex');
     console.log('result hash', hash);
 
