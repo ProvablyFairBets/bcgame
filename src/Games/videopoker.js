@@ -30,7 +30,7 @@ function init(hash, times) {
     cards.sort(function (o1, o2) {
         if (o1.hash < o2.hash) {
             return -1;
-        } else if (o1.hash == o2.hash) {
+        } else if (o1.hash === o2.hash) {
             return 0;
         } else {
             return 1;
