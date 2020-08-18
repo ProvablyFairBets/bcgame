@@ -1,6 +1,6 @@
 {
-  "homepage": "https://provably-fair.github.io/bc.game",
-  "name": "bc.game",
+  "homepage": "https://provably-fair.github.io/bcgame",
+  "name": "bcgame",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
