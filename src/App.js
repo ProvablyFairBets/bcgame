@@ -116,7 +116,7 @@ class App extends React.Component {
                 }} >
                   Hilo
             </Button>
-                <Button variant={videoPoker ? 'primary' : 'light'} className="mt-2" onClick={() => {
+                <Button variant={videoPoker ? 'primary' : 'light'} className="ml-2" onClick={() => {
                   this.setState({
                     hashDice: false, classicDice: false, plinko: false, limbo: false, hilo: false, videoPoker: true, blackjack: false,
                     result: 0, showResult: false, ServerSeed: '', ClientSeed: '', Nonce: 0, validated: false
@@ -124,7 +124,7 @@ class App extends React.Component {
                 }} >
                   Video Poker
             </Button>
-                <Button variant={blackjack ? 'primary' : 'light'} className="mt-2" onClick={() => {
+                <Button variant={blackjack ? 'primary' : 'light'} className="ml-2" onClick={() => {
                   this.setState({
                     hashDice: false, classicDice: false, plinko: false, limbo: false, hilo: false, videoPoker: false, blackjack: true,
                     result: 0, showResult: false, ServerSeed: '', ClientSeed: '', Nonce: 0, validated: false
@@ -169,7 +169,7 @@ class App extends React.Component {
                 }
               </Form>
             </Col>
-            <Col><div style={{ margin: '8%' }}>
+            {/* <Col><div style={{ margin: '8%' }}>
 
             </div>
               {result && (hilo || videoPoker) ? <h5>Player Cards</h5> : ''}
@@ -177,17 +177,17 @@ class App extends React.Component {
                 return <img width="15%" key={i} src={require('./cards-png/' + card + '.png')} alt={result} />;
               })
                 : ''}
-            </Col>
+            </Col> */}
           </Row>
           <br></br>
           <br></br>
           <br></br>
           <Row>
-            {result && blackjack ? <h5 className="text-center">Player Cards</h5> : ''}
+            {result && (hilo || videoPoker || blackjack) ? <h5 className="text-center">Player Cards</h5> : ''}
           </Row>
           <br></br>
           <Row>
-            {result && blackjack ? result.map((card, i) => {
+            {result && (hilo || videoPoker || blackjack) ? result.map((card, i) => {
               return <div className="mt-2">
                 <div className="ml-3">{i}</div>
                 <img width="25%" key={i} src={require('./cards-png/' + card + '.png')} alt={result} />
