@@ -20,7 +20,7 @@ let payout = [
 
 let result_hash_list;
 
-function final_result(risk, segments) {
+export function final_result(risk, segments) {
     return payout.find(item => {
         return (item.segment === Number(segments) && item.risk === risk)
     }).payouts
@@ -56,5 +56,5 @@ export function handleWheel(server_seed, client_seed, nonce, risk, segments) {
 
     result_hash_list = sha256(server_seed + client_seed + nonce).toString()
 
-    return final_result(risk, segments)[parseInt(numResult(result_hash_list) * 50)];
+    return parseInt(numResult(result_hash_list) * 50);
 }

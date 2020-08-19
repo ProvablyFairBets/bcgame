@@ -9,7 +9,7 @@ import { handleVideoPoker } from './Games/videopoker.js';
 import { handleBlackjack } from './Games/blackjack.js';
 import { handleRoulette } from './Games/roulette.js';
 import { handleSlots } from './Games/slots.js';
-import { handleWheel } from './Games/wheel.js';
+import { handleWheel, final_result } from './Games/wheel.js';
 import './App.css';
 
 class App extends React.Component {
@@ -35,6 +35,23 @@ class App extends React.Component {
       wheel: false,
       risk: 'Low',
       segments: 10,
+      payout: [
+        { segment: 10, risk: 'Low', payouts: [1.5, 1.2, 1.2, 1.2, 0, 1.2, 1.2, 1.2, 1.2, 0] },
+        { segment: 20, risk: 'Low', payouts: [1.5, 1.2, 1.2, 1.2, 0, 1.2, 1.2, 1.2, 1.2, 0, 1.5, 1.2, 1.2, 1.2, 0, 1.2, 1.2, 1.2, 1.2, 0] },
+        { segment: 30, risk: 'Low', payouts: [1.5, 1.2, 1.2, 1.2, 0, 1.2, 1.2, 1.2, 1.2, 0, 1.5, 1.2, 1.2, 1.2, 0, 1.2, 1.2, 1.2, 1.2, 0, 1.5, 1.2, 1.2, 1.2, 0, 1.2, 1.2, 1.2, 1.2, 0] },
+        { segment: 40, risk: 'Low', payouts: [1.5, 1.2, 1.2, 1.2, 0, 1.2, 1.2, 1.2, 1.2, 0, 1.5, 1.2, 1.2, 1.2, 0, 1.2, 1.2, 1.2, 1.2, 0, 1.5, 1.2, 1.2, 1.2, 0, 1.2, 1.2, 1.2, 1.2, 0, 1.5, 1.2, 1.2, 1.2, 0, 1.2, 1.2, 1.2, 1.2, 0] },
+        { segment: 50, risk: 'Low', payouts: [1.5, 1.2, 1.2, 1.2, 0, 1.2, 1.2, 1.2, 1.2, 0, 1.5, 1.2, 1.2, 1.2, 0, 1.2, 1.2, 1.2, 1.2, 0, 1.5, 1.2, 1.2, 1.2, 0, 1.2, 1.2, 1.2, 1.2, 0, 1.5, 1.2, 1.2, 1.2, 0, 1.2, 1.2, 1.2, 1.2, 0, 1.5, 1.2, 1.2, 1.2, 0, 1.2, 1.2, 1.2, 1.2, 0] },
+        { segment: 10, risk: 'Medium', payouts: [0, 1.9, 0, 1.5, 0, 2, 0, 1.5, 0, 3] },
+        { segment: 20, risk: 'Medium', payouts: [1.5, 0, 2, 0, 2, 0, 2, 0, 1.5, 0, 3, 0, 1.8, 0, 2, 0, 2, 0, 2, 0] },
+        { segment: 30, risk: 'Medium', payouts: [1.5, 0, 1.5, 0, 2, 0, 1.5, 0, 2, 0, 2, 0, 1.5, 0, 3, 0, 1.5, 0, 2, 0, 2, 0, 1.7, 0, 4, 0, 1.5, 0, 2, 0] },
+        { segment: 40, risk: 'Medium', payouts: [2, 0, 3, 0, 2, 0, 1.5, 0, 3, 0, 1.5, 0, 1.5, 0, 2, 0, 1.5, 0, 3, 0, 1.5, 0, 2, 0, 2, 0, 1.6, 0, 2, 0, 1.5, 0, 3, 0, 1.5, 0, 2, 0, 1.5, 0] },
+        { segment: 50, risk: 'Medium', payouts: [2, 0, 1.5, 0, 2, 0, 1.5, 0, 3, 0, 1.5, 0, 1.5, 0, 2, 0, 1.5, 0, 3, 0, 1.5, 0, 2, 0, 1.5, 0, 2, 0, 2, 0, 1.5, 0, 3, 0, 1.5, 0, 2, 0, 1.5, 0, 1.5, 0, 5, 0, 1.5, 0, 2, 0, 1.5, 0] },
+        { segment: 10, risk: 'High', payouts: [0, 0, 0, 0, 0, 0, 0, 0, 0, 9.9] },
+        { segment: 20, risk: 'High', payouts: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 19.8] },
+        { segment: 30, risk: 'High', payouts: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 29.7] },
+        { segment: 40, risk: 'High', payouts: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 39.6] },
+        { segment: 50, risk: 'High', payouts: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 49.5] }
+      ]
     }
   }
 
@@ -69,7 +86,7 @@ class App extends React.Component {
 
   render() {
     const { ServerSeed, ClientSeed, Nonce, result, showResult, classicDice, hashDice, plinko, limbo, hilo, videoPoker, blackjack,
-      roulette, slots, wheel, validated } = this.state;
+      roulette, slots, wheel, risk, segments, validated } = this.state;
     return (
       <div className="container pt-5">
         <div>
@@ -224,10 +241,18 @@ class App extends React.Component {
                 <Button variant="primary" type="button" onClick={this.handleSubmit}>
                   Submit
         </Button>
-                {showResult && validated && !hilo && !videoPoker && !blackjack &&
+                {showResult && validated && !hilo && !videoPoker && !blackjack && !wheel &&
                   <Alert className="mt-3 text-center" variant="success">
-                    The result is : {result} !
+                    The result is :  {result} !
                   </Alert>
+                }
+                {wheel && showResult && validated && result <= segments ?
+                  <Alert className="mt-3 text-center" variant="success">
+                    The result is :{final_result(risk, segments)[result]} !
+                  </Alert>
+                  : (wheel && result > segments) ? <Alert className="mt-3 text-center" variant="danger">
+                    Please enter valid number of segments !
+                </Alert> : ''
                 }
               </Form>
             </Col>
