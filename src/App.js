@@ -276,7 +276,7 @@ class App extends React.Component {
           <Row>
             {slots && result ? <div>
               <h2>Result</h2>
-              <table className="table table-bordered">
+              <table className="table table-bordered text-center">
                 <tbody>
                   <tr>
                     <th>Left</th>
@@ -293,11 +293,18 @@ class App extends React.Component {
                     <td>[565562,1000000)</td>
                   </tr>
                   <tr>
-                    {<td className={result >= 0 && result < 206250 && "bg-success"}>{result >= 0 && result < 206250 && result}</td>}
-                    {<td className={result >= 206250 && result < 288750 && "bg-success"}>{result >= 206250 && result < 288750 && result}</td>}
-                    {<td className={result >= 288750 && result < 420750 && "bg-success"}>{result >= 288750 && result < 420750 && result}</td>}
-                    {<td className={result >= 420750 && result < 565562 && "bg-success"}>{result >= 420750 && result < 565562 && result}</td>}
-                    {<td className={result >= 565562 && result < 1000000 && "bg-success"}>{result >= 565562 && result < 1000000 && result}</td>}
+                    <td className={result >= 0 && result < 206250 && "bg-success"}>{result >= 0 && result < 206250 && result}</td>
+                    <td className={result >= 206250 && result < 288750 && "bg-success"}>{result >= 206250 && result < 288750 && result}</td>
+                    <td className={result >= 288750 && result < 420750 && "bg-success"}>{result >= 288750 && result < 420750 && result}</td>
+                    <td className={result >= 420750 && result < 565562 && "bg-success"}>{result >= 420750 && result < 565562 && result}</td>
+                    <td className={result >= 565562 && result < 1000000 && "bg-success"}>{result >= 565562 && result < 1000000 && result}</td>
+                  </tr>
+                  <tr className="text-center">
+                  <td><img width="50%" key={result} src={require('./assets/slots/book.png')} alt="Book" /></td>
+                  <td><img width="50%" key={result} src={require('./assets/slots/cross.png')} alt="Book" /></td>
+                  <td><img width="50%" key={result} src={require('./assets/slots/amulet.png')} alt="Book" /></td>
+                  <td><img width="50%" key={result} src={require('./assets/slots/skull.png')} alt="Book" /></td>
+                  <td><img width="55%" height="50%" key={result} src={require('./assets/slots/blank.png')} alt="Book" /></td>
                   </tr>
                 </tbody>
               </table>

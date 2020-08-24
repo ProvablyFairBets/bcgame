@@ -57,7 +57,7 @@ export function handleHilo(server_seed, client_seed, nonce, round) {
     let totalNums = [];
     for (let round = 0; round < 52; round++) {
         let nums = [];
-        for (const [index, value] of bytes_to_num_array(bytes(`${server_seed}:${client_seed}:${nonce}:${round}`)).entries()) {
+        for (const [, value] of bytes_to_num_array(bytes(`${server_seed}:${client_seed}:${nonce}:${round}`)).entries()) {
             nums.push(value);
         }
         totalNums.push(nums[0]);
@@ -68,5 +68,3 @@ export function handleHilo(server_seed, client_seed, nonce, round) {
 
     return totalNums;
 }
-
-
