@@ -2,7 +2,7 @@ import React from 'react';
 import { Form, Media, Button, Alert, Row, Col } from 'react-bootstrap';
 import { roll } from './Games/dice.js';
 import { getRoll } from './Games/hashdice.js';
-import { handlePlinko } from './Games/plinko.js';
+import { handlePlinko, final_payout } from './Games/plinko.js';
 import { handleLimbo } from './Games/limbo.js';
 import { handleHilo } from './Games/hilo.js';
 import { handleVideoPoker } from './Games/videopoker.js';
@@ -35,30 +35,14 @@ class App extends React.Component {
       wheel: false,
       risk: 'Low',
       segments: 10,
-      payout: [
-        { segment: 10, risk: 'Low', payouts: [1.5, 1.2, 1.2, 1.2, 0, 1.2, 1.2, 1.2, 1.2, 0] },
-        { segment: 20, risk: 'Low', payouts: [1.5, 1.2, 1.2, 1.2, 0, 1.2, 1.2, 1.2, 1.2, 0, 1.5, 1.2, 1.2, 1.2, 0, 1.2, 1.2, 1.2, 1.2, 0] },
-        { segment: 30, risk: 'Low', payouts: [1.5, 1.2, 1.2, 1.2, 0, 1.2, 1.2, 1.2, 1.2, 0, 1.5, 1.2, 1.2, 1.2, 0, 1.2, 1.2, 1.2, 1.2, 0, 1.5, 1.2, 1.2, 1.2, 0, 1.2, 1.2, 1.2, 1.2, 0] },
-        { segment: 40, risk: 'Low', payouts: [1.5, 1.2, 1.2, 1.2, 0, 1.2, 1.2, 1.2, 1.2, 0, 1.5, 1.2, 1.2, 1.2, 0, 1.2, 1.2, 1.2, 1.2, 0, 1.5, 1.2, 1.2, 1.2, 0, 1.2, 1.2, 1.2, 1.2, 0, 1.5, 1.2, 1.2, 1.2, 0, 1.2, 1.2, 1.2, 1.2, 0] },
-        { segment: 50, risk: 'Low', payouts: [1.5, 1.2, 1.2, 1.2, 0, 1.2, 1.2, 1.2, 1.2, 0, 1.5, 1.2, 1.2, 1.2, 0, 1.2, 1.2, 1.2, 1.2, 0, 1.5, 1.2, 1.2, 1.2, 0, 1.2, 1.2, 1.2, 1.2, 0, 1.5, 1.2, 1.2, 1.2, 0, 1.2, 1.2, 1.2, 1.2, 0, 1.5, 1.2, 1.2, 1.2, 0, 1.2, 1.2, 1.2, 1.2, 0] },
-        { segment: 10, risk: 'Medium', payouts: [0, 1.9, 0, 1.5, 0, 2, 0, 1.5, 0, 3] },
-        { segment: 20, risk: 'Medium', payouts: [1.5, 0, 2, 0, 2, 0, 2, 0, 1.5, 0, 3, 0, 1.8, 0, 2, 0, 2, 0, 2, 0] },
-        { segment: 30, risk: 'Medium', payouts: [1.5, 0, 1.5, 0, 2, 0, 1.5, 0, 2, 0, 2, 0, 1.5, 0, 3, 0, 1.5, 0, 2, 0, 2, 0, 1.7, 0, 4, 0, 1.5, 0, 2, 0] },
-        { segment: 40, risk: 'Medium', payouts: [2, 0, 3, 0, 2, 0, 1.5, 0, 3, 0, 1.5, 0, 1.5, 0, 2, 0, 1.5, 0, 3, 0, 1.5, 0, 2, 0, 2, 0, 1.6, 0, 2, 0, 1.5, 0, 3, 0, 1.5, 0, 2, 0, 1.5, 0] },
-        { segment: 50, risk: 'Medium', payouts: [2, 0, 1.5, 0, 2, 0, 1.5, 0, 3, 0, 1.5, 0, 1.5, 0, 2, 0, 1.5, 0, 3, 0, 1.5, 0, 2, 0, 1.5, 0, 2, 0, 2, 0, 1.5, 0, 3, 0, 1.5, 0, 2, 0, 1.5, 0, 1.5, 0, 5, 0, 1.5, 0, 2, 0, 1.5, 0] },
-        { segment: 10, risk: 'High', payouts: [0, 0, 0, 0, 0, 0, 0, 0, 0, 9.9] },
-        { segment: 20, risk: 'High', payouts: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 19.8] },
-        { segment: 30, risk: 'High', payouts: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 29.7] },
-        { segment: 40, risk: 'High', payouts: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 39.6] },
-        { segment: 50, risk: 'High', payouts: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 49.5] }
-      ]
+      rows:8,
     }
   }
 
   handleSubmit = (event) => {
 
     const { ServerSeed, ClientSeed, Nonce, classicDice, hashDice, plinko, limbo, hilo, videoPoker, blackjack, roulette, slots,
-      round, wheel, risk, segments } = this.state;
+      round, wheel, risk, segments, rows } = this.state;
 
     const form = event.currentTarget;
     if (form.checkValidity() === false || ServerSeed === '' || (!blackjack && !roulette && ClientSeed === '')) {
@@ -70,7 +54,7 @@ class App extends React.Component {
       this.setState({
         result: classicDice ? roll(`${ServerSeed}:${ClientSeed}:${Nonce}`)
           : hashDice ? getRoll(`${ServerSeed}${ClientSeed}${Nonce}`)
-            : plinko ? handlePlinko(ServerSeed, ClientSeed, Nonce)
+            : plinko ? handlePlinko(ServerSeed, ClientSeed, Nonce, rows, risk)
               : limbo ? handleLimbo(`${ServerSeed}:${ClientSeed}:${Nonce}`)
                 : hilo ? handleHilo(ServerSeed, ClientSeed, Nonce, round)
                   : videoPoker ? handleVideoPoker(`${ServerSeed}${ClientSeed}${Nonce}`)
@@ -86,7 +70,7 @@ class App extends React.Component {
 
   render() {
     const { ServerSeed, ClientSeed, Nonce, result, showResult, classicDice, hashDice, plinko, limbo, hilo, videoPoker, blackjack,
-      roulette, slots, wheel, risk, segments, validated } = this.state;
+      roulette, slots, wheel, risk, segments, rows, validated } = this.state;
     return (
       <div className="container pt-5">
         <div>
@@ -215,7 +199,7 @@ class App extends React.Component {
                   }} />
                 </Form.Group>}
 
-                {wheel && <Form.Group controlId="exampleForm.ControlSelect1">
+                {( wheel || plinko ) && <Form.Group controlId="exampleForm.ControlSelect1">
                   <Form.Label>Risk</Form.Label>
                   <Form.Control as="select" onChange={(e) => {
                     this.setState({ risk: e.target.value })
@@ -237,11 +221,27 @@ class App extends React.Component {
                     <option>50</option>
                   </Form.Control>
                 </Form.Group>}
+                {plinko && <Form.Group controlId="exampleForm.ControlSelect1">
+                  <Form.Label>Rows</Form.Label>
+                  <Form.Control as="select" onChange={(e) => {
+                    this.setState({ rows: e.target.value })
+                  }}>
+                    <option>8</option>
+                    <option>9</option>
+                    <option>10</option>
+                    <option>11</option>
+                    <option>12</option>
+                    <option>13</option>
+                    <option>14</option>
+                    <option>15</option>
+                    <option>16</option>
+                  </Form.Control>
+                </Form.Group>}
 
                 <Button variant="primary" type="button" onClick={this.handleSubmit}>
                   Submit
         </Button>
-                {showResult && validated && !hilo && !videoPoker && !blackjack && !wheel &&
+                {showResult && validated && !hilo && !videoPoker && !blackjack && !wheel && !plinko &&
                   <Alert className="mt-3 text-center" variant="success">
                     The result is :  {result} !
                   </Alert>
@@ -252,6 +252,14 @@ class App extends React.Component {
                   </Alert>
                   : (wheel && result > segments) ? <Alert className="mt-3 text-center" variant="danger">
                     Please enter valid number of segments !
+                </Alert> : ''
+                }
+                {plinko && showResult && validated && result <= rows ?
+                  <Alert className="mt-3 text-center" variant="success">
+                    The result is :{final_payout(risk, rows)[result]} !
+                  </Alert>
+                  : (plinko && result > rows) ? <Alert className="mt-3 text-center" variant="danger">
+                    Please enter valid number of rows !
                 </Alert> : ''
                 }
               </Form>

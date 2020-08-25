@@ -1,6 +1,20 @@
 // crypto lib for hash function
 const crypto = require('crypto');
-const payout = [5.6, 2.1, 1.1, 1.0, 0.5, 1.0, 1.1, 2.1, 5.6];
+const payout = [
+  { rows:8, risk:'Low', payouts: [5.6, 2.1, 1.1, 1.0, 0.5, 1.0, 1.1, 2.1, 5.6] },
+  { rows:8, risk:'Medium', payouts: [13, 3.0, 1.3, 0.7, 0.4, 0.7, 1.3, 3.0, 13] },
+  { rows:8, risk:'High', payouts: [29, 4, 1.5, 0.3, 0.2, 0.3, 1.5, 4, 29] },
+  { rows:9, risk:'Low', payouts: [5.6, 2.0, 1.6, 1.0, 0.7, 0.7, 1.0, 1.6, 2.0, 5.6] },
+  { rows:9, risk:'Medium', payouts: [18, 4.0, 1.7, 0.9, 0.5, 0.5, 0.9, 1.7, 4.0, 18] },
+  { rows:9, risk:'High', payouts: [43, 7.0, 2.0, 0.6, 0.2, 0.2, 0.6, 2.0, 7.0, 43] },
+];
+
+export function final_payout(risk, rows) {
+    return payout.find(item => {
+        return (item.rows === Number(rows) && item.risk === risk)
+    }).payouts
+}
+
 function bytes(data) {
     let result = '';
     result = crypto.createHash('sha512').update(data).digest('hex');
@@ -29,17 +43,12 @@ function bytes_to_number(bytes) {
     return total;
 };
 
-export function handlePlinko(server_seed, client_seed, nonce) {
+export function handlePlinko(server_seed, client_seed, nonce, rows, risk) {
     let nums = [];
-    let payoutIndex = 9;
+    let payoutIndex = final_payout(risk, rows).length;
     bytes_to_num_array(bytes(`${server_seed}${client_seed}${nonce}`)).map((value, index) => {
         let direction = Math.floor(value * 2) ? payoutIndex++ : payoutIndex--;
         return nums.push(direction);
     })
-    console.log(payout);
-    console.log("Plinko -- ", nums, nums[8]/2);
-    if((nums[8]/2)<4)
-      return payout[Math.floor(nums[8]/2)];
-    else
-      return payout[Math.floor(nums[8]/2)];
+    return Math.floor(nums[rows]/2);
 }
