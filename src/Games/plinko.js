@@ -1,6 +1,6 @@
 // crypto lib for hash function
 const crypto = require('crypto');
-
+const payout = [5.6, 2.1, 1.1, 1.0, 0.5, 1.0, 1.1, 2.1, 5.6];
 function bytes(data) {
     let result = '';
     result = crypto.createHash('sha512').update(data).digest('hex');
@@ -31,13 +31,15 @@ function bytes_to_number(bytes) {
 
 export function handlePlinko(server_seed, client_seed, nonce) {
     let nums = [];
-
+    let payoutIndex = 9;
     bytes_to_num_array(bytes(`${server_seed}${client_seed}${nonce}`)).map((value, index) => {
-        let direction = Math.floor(value * 2) ? 'right' : 'left';
-        return nums.push(direction + ', ');
+        let direction = Math.floor(value * 2) ? payoutIndex++ : payoutIndex--;
+        return nums.push(direction);
     })
-    console.log("Plinko -- ", nums);
-    return nums;
+    console.log(payout);
+    console.log("Plinko -- ", nums, nums[8]/2);
+    if((nums[8]/2)<4)
+      return payout[Math.floor(nums[8]/2)];
+    else
+      return payout[Math.floor(nums[8]/2)];
 }
-
-
