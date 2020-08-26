@@ -248,7 +248,7 @@ class App extends React.Component {
                 }
                 {wheel && showResult && validated && result <= segments ?
                   <Alert className="mt-3 text-center" variant="success">
-                    The result is :{final_result(risk, segments)[result]} !
+                    The result is :{final_result(risk, segments)[result]}x !
                   </Alert>
                   : (wheel && result > segments) ? <Alert className="mt-3 text-center" variant="danger">
                     Please enter valid number of segments !
@@ -256,7 +256,7 @@ class App extends React.Component {
                 }
                 {plinko && showResult && validated && result <= rows ?
                   <Alert className="mt-3 text-center" variant="success">
-                    The result is :{final_payout(risk, rows)[result]} !
+                    The result is : {final_payout(risk, rows)[result]}x !
                   </Alert>
                   : (plinko && result > rows) ? <Alert className="mt-3 text-center" variant="danger">
                     Please enter valid number of rows !
