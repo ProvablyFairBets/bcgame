@@ -55,7 +55,7 @@ function nums_to_card_array(nums) {
 export function handleHilo(server_seed, client_seed, nonce, round) {
 
     let totalNums = [];
-    for (let round = 0; round < 52; round++) {
+    for (let round = 0; round < 64; round++) {
         let nums = [];
         for (const [, value] of bytes_to_num_array(bytes(`${server_seed}:${client_seed}:${nonce}:${round}`)).entries()) {
             nums.push(value);
