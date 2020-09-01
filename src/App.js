@@ -275,8 +275,8 @@ class App extends React.Component {
           {(hilo || videoPoker || blackjack) && <Row>
             {result && (hilo || videoPoker || blackjack) ? result.map((card, i) => {
               return <div className="mt-2" key={'outer_card_' + i}>
-                <div className="ml-3" key={'card_' + i}>{i}</div>
-                <img width="25%" key={i} src={require('./assets/cards-png/' + card + '.png')} alt={result} />
+                <div className="ml-4" key={'card_' + i}>{i}</div>
+                <img className="card-bordered" width="30%" key={i} src={require('./assets/cards-png/' + card + '.png')} alt={card} />
               </div>
             })
               : ''}
